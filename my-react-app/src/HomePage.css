@@ -1,0 +1,11 @@
+.home-page {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f8ff; /* Light background color */
+}
+
+.home-image {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+}
