@@ -1,11 +1,69 @@
 .home-page {
     text-align: center;
     padding: 20px;
-    background-color: #f0f8ff; /* Light background color */
+    background-color: whitesmoke; /* Light background color */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: paleturquoise; /* Navbar background color */
+    color: white;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+}
+
+.hero-section {
+    background-image: url ('back.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 50px 20px;
+    color: black;
+}
+.cta-button {
+    background-color: paleturquoise; /* Button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.cta-button:hover {
+    background-color: palevioletred; /* Darker shade on hover */
 }
 
 .home-image {
     max-width: 100%;
-    height: auto;
-    margin: 20px 0;
+    max-height: 100%;
+    margin: 15px 0;
+}
+.button-container {
+    color: white;
+    border: none;
+    padding: 20px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;  
+}
+.button-container:hover{
+    background-color: palevioletred; /* Darker shade on hover */}
+.logo{
+    max-width: fit-content;
+}
+.main-header{
+    background-position: center;
+    text-align: center;
 }
