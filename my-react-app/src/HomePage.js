@@ -13,18 +13,21 @@ const HomePage = () => {
         navigate('/login');
     };
 
+    const handleBookNow = () => {
+        navigate('/book-appointment');
+    };
+
     return (
         <div className="home-page">
             <nav className="navbar">
-                <img src="" alt="Haven Beauty"className="logo"/> 
+                <img src="" alt="Haven Beauty" className="logo"/> 
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/">Services</a></li>
-                    <li><a href="/">Book Now</a></li>
+                    <li><a onClick={handleBookNow}>Book Now</a></li>
                     <li><a href="/">Blogs</a></li>
                     <li><a href="/">Contacts</a></li>
-        <div/>
-                 </ul>
+                </ul>
             </nav>
             <div className="hero-section">
                 <h2>Welcome to Haven Beauty Parlour and Spa</h2>
@@ -34,7 +37,7 @@ const HomePage = () => {
                 <button className="cta-button">Book Now</button>
             </div>
             <div className="button-container">
-                <button classname="reg-button" onClick={handleRegister}>Register</button>
+                <button className="reg-button" onClick={handleRegister}>Register</button>
                 <button onClick={handleLogin}>Login</button>
             </div>
         </div>

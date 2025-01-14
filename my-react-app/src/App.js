@@ -9,12 +9,15 @@ import Stylists from './Stylists';
 import AdminDashboard from './AdminDashboard';
 import StylistDashboard from './StylistDashboard';
 import CustomerDashboard from './CustomerDashboard';
+import BookList from './BookList';
+import BookDetails from './BookDetails';
+import BookHistory from './BookHistory';
 
 const App = () => {
     return (
-        <div>
-            <h1>Beauty Parlour and Spa</h1>
-            <Routes>
+        <div className='main-header'>
+            <h1 >Beauty Parlour and Spa</h1>
+                <Routes>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/users" element={<UserList />} /> {/* New route for UserList */}
@@ -23,6 +26,9 @@ const App = () => {
                 <Route path ="/customer" element={<CustomerDashboard/>}/>
                 <Route path="/book-appointment" element={<BookAppointment />} />
                 <Route path="/stylists" element={<Stylists />} />
+                <Route path="/book-list" element={<BookList />} />
+                <Route path="/book-details" element={<BookDetails />} />
+                <Route path="/book-history" element={<BookHistory />} />
 
                 {/* Add other routes here */}
 <Route path="/" element={<HomePage />} />
