@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const BookAppointment = () => {
-    const [stylistId, setStylistId] = useState('');
+    const [stylists, setStylists] = useState([]);
+    const [selectedStylist, setSelectedStylist] = useState('');
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
+    const [stylistInfo, setStylistInfo] = useState(null);
+
+    useEffect(() => {
+        // Fetch stylist information from the server
+        const fetchStylists = async () => {
+            const response = await axios.get('http://localhost:3000/stylists');
+            setStylists(response.data);
+        };
+        fetchStylists();
+    }, []);
 
     const handleBooking = async (e) => {
         e.preventDefault();
-        await axios.post('https://yourdomain.com/book', { stylistId, date, time });
+        // Validate stylist availability here
+        await axios.post('http://localhost:3000/book', { stylistId: selectedStylist, date, time });
         alert('Appointment booked successfully!');
+    };
+
+    const handleStylistChange = (e) => {
+        const stylistId = e.target.value;
+        setSelectedStylist(stylistId);
+        // Fetch stylist details
+        const stylist = stylists.find(stylist => stylist.id === stylistId);
+        setStylistInfo(stylist);
     };
 
     const handlePayment = () => {
@@ -37,7 +57,19 @@ const BookAppointment = () => {
         <div>
             <form onSubmit={handleBooking} style={{ marginBottom: '2rem' }}>
                 <h2>Book Appointment</h2>
-                <input type="text" placeholder="Stylist ID" value={stylistId} onChange={(e) => setStylistId(e.target.value)} required />
+                <select value={selectedStylist} onChange={handleStylistChange} required>
+                    <option value="">Select Stylist</option>
+                    {stylists.map(stylist => (
+                        <option key={stylist.id} value={stylist.id}>{stylist.name}</option>
+                    ))}
+                </select>
+                {stylistInfo && (
+                    <div>
+                        <h3>Stylist Information</h3>
+                        <p>Expertise: {stylistInfo.expertise}</p>
+                        <p>Availability: {stylistInfo.availability}</p>
+                    </div>
+                )}
                 <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
                 <input type="time" value={time} onChange={(e) => setTime(e.target.value)} required />
                 <button type="submit">Book Appointment</button>
