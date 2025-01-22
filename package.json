@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "imagemin": "^9.0.0",
+    "imagemin-jpegtran": "^8.0.0"
+  }
+}
