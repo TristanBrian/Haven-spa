@@ -39,7 +39,7 @@ class ErrorBoundary extends Component {
 const App = () => {
     return (
         <div className='main-header'>
-            <h1>Beauty Parlour and Spa</h1>
+            <h1>Haven Parlour and Spa</h1>
             <Routes>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />

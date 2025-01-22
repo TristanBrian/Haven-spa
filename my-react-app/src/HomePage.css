@@ -11,7 +11,7 @@
 }
 
 .product-description {
-    text-align: justify; /* Justify the product description text */
+    text-align:start; /* Justify the product description text */
 }
 .navbar ul {
     list-style: none;
@@ -22,6 +22,7 @@
 .navbar a {
     color: black;
     text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .navbar a:hover {
@@ -35,7 +36,7 @@
     font-style: italic;
     font-family:'Courier New', Courier, monospace;
     font-size: large;
-    padding: 100px 20px;
+    padding: 100px 15px;
     color: rgb(14, 14, 14);
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Add text shadow for readability */
 }
@@ -119,4 +120,84 @@
 .hero-section {
     background-size: cover; /* Ensure the hero image covers the section */
     background-position: center; /* Center the background image */
+}
+
+/* New styles for the slider images */
+.slider {
+    display: flex;
+    overflow: hidden; /* Hide overflow to create a slider effect */
+    width: 100%; /* Full width */
+    height: 300px; /* Set a fixed height for the slider */
+}
+
+.slider img {
+    width: 100%; /* Full width of the slider */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the area while maintaining aspect ratio */
+    transition: transform 0.5s ease; /* Smooth transition for sliding effect */
+}
+
+/* New styles for testimonials */
+.testimonials-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.testimonial {
+    background-color: white; /* Background for testimonial */
+    border-radius: 10px; /* Rounded corners */
+    padding: 15px; /* Padding inside testimonial */
+    margin: 10px; /* Margin between testimonials */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    width: 80%; /* Width of testimonial */
+    max-width: 600px; /* Max width */
+    text-align: left; /* Align text to the left */
+}
+
+.testimonial img {
+    width: 50px; /* Width for client image */
+    height: 50px; /* Height for client image */
+    border-radius: 50%; /* Circular image */
+    margin-right: 10px; /* Space between image and text */
+    float: left; /* Float image to the left */
+}
+
+.rating {
+    color: gold; /* Color for rating stars */
+}
+
+/* New styles for contact section */
+.contact-container {
+    background-color: #e0f7fa; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside the container */
+    margin: 20px auto; /* Center the container */
+    width: 80%; /* Width of the container */
+    max-width: 600px; /* Max width */
+    text-align: center; /* Center align text */
+}
+
+
+.contact-container input,
+.contact-container textarea {
+    width: 50%; /* Full width */
+    padding: 10px; /* Padding inside input fields */
+    margin: 10px 0; /* Margin between fields */
+    border: 1px solid #ccc; /* Border for input fields */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.contact-container button {
+    background-color: #4caf50; /* Green button */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 15px; /* Padding inside button */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.contact-container button:hover {
+    background-color: #45a049; /* Darker green on hover */
 }
