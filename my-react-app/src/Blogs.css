@@ -1,0 +1,31 @@
+/* Blogs styles */
+.blogs-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.blog-post {
+    background-color: #f9f9f9; /* Light background for blog posts */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside blog post */
+    margin: 15px; /* Margin between blog posts */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    width: 80%; /* Width of blog post */
+    max-width: 600px; /* Max width */
+    text-align: left; /* Align text to the left */
+}
+
+.blog-post h2 {
+    margin: 0 0 10px; /* Margin for blog post title */
+}
+
+.blog-post p {
+    margin: 5px 0; /* Margin for blog post content */
+}
+
+.blog-post .author {
+    font-weight: bold; /* Bold for author name */
+    margin-top: 10px; /* Margin above author name */
+}
