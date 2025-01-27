@@ -15,18 +15,7 @@ const HomePage = () => {
         message: ''
     });
     const [responseMessage, setResponseMessage] = useState('');
-
-    const handleRegister = () => {
-        navigate('/register');
-    };
-
-    const handleLogin = () => {
-        navigate('/login');
-    };
-
-    const handleBookNow = () => {
-        navigate('/book-appointment');
-    };
+    const [loading, setLoading] = useState(false); // Loading state
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,12 +24,37 @@ const HomePage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Set loading to true
         try {
             const response = await axios.post('http://localhost:5000/contact', formData);
             setResponseMessage(response.data.message);
+            
+            // Play success sound
+            const audio = new Audio('/mixkit-long-pop-2358.wav'); // Update the path to your audio file
+            audio.play();
+
+            // Provide feedback after the email has been sent
+            setTimeout(() => {
+                setResponseMessage('Your message has been sent successfully!'); // Feedback message
+                window.location.reload();
+            }, 2000); // Adjust the delay as needed
         } catch (error) {
             setResponseMessage('Failed to send message. Please try again.');
+        } finally {
+            setLoading(false); // Reset loading state
         }
+    };
+
+    const handleBookNow = () => {
+        navigate('/book-appointment');
+    };
+
+    const handleRegister = () => {
+        navigate('/register');
+    };
+
+    const handleLogin = () => {
+        navigate('/login');
     };
 
     useEffect(() => {
@@ -123,8 +137,9 @@ const HomePage = () => {
                     <input type="email" name="email" placeholder="Email *" required onChange={handleChange} />
                     <input type="tel" name="phone" placeholder="Phone" onChange={handleChange} />
                     <textarea name="message" placeholder="Your questions or comments" required onChange={handleChange}></textarea>
-                    <button type="submit">Submit</button>
+                    <button type="submit" disabled={loading}>Submit</button>
                 </form>
+                {loading && <p>Loading...</p>} {/* Display loading indicator */}
                 {responseMessage && <p>{responseMessage}</p>}
             </div>
             <div className="button-container">
