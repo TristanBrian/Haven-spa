@@ -26,8 +26,8 @@ init_db()
 # MYSQL config
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'haven_spa_db'
+app.config['MYSQL_PASSWORD'] = '@Bray124'
+app.config['MYSQL_DB'] = 'haven'
 mysql = MySQL(app)
 
 # Create a default admin user if it doesn't exist
@@ -54,6 +54,14 @@ def register():
 def contact():
     data = request.json
     logging.info(f"Received contact form data: {data}")  # Log the incoming data
+    
+    # Insert contact form data into the database
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO contact_submissions (first_name, last_name, email, phone, message) VALUES (%s, %s, %s, %s, %s)', 
+                   (data['firstName'], data['lastName'], data['email'], data['phone'], data['message']))
+    conn.commit()
+    
     msg = Message('New Contact Form Submission', sender='lessusbrian7@gmail.com', recipients=['company_email@example.com'])
     msg.body = f"Name: {data['firstName']} {data['lastName']}\nEmail: {data['email']}\nPhone: {data['phone']}\nMessage: {data['message']}"
 
