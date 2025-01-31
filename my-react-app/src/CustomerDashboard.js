@@ -7,34 +7,19 @@ const CustomerDashboard = () => {
 
     useEffect(() => {
         const fetchAppointments = async () => {
-            const response = await axios.get('http://localhost:3000/appointments');
+            const response = await axios.get('/api/appointments?user_id=1'); // Replace with actual user ID
             setAppointments(response.data);
         };
-        const fetchBookingHistory = async () => {
-            const response = await axios.get('http://localhost:3000/booking-history');
-            setBookingHistory(response.data);
-        };
         fetchAppointments();
-        fetchBookingHistory();
     }, []);
 
     return (
         <div>
-            <h1>Customer Dashboard</h1>
-            <p>Book appointments and view your history here.</p>
-            <h2>Upcoming Appointments</h2>
+            <h1>Your Appointments</h1>
             <ul>
                 {appointments.map(appointment => (
-                    <li key={appointment.id}>
-                        {appointment.stylistName} - {appointment.date} at {appointment.time}
-                    </li>
-                ))}
-            </ul>
-            <h2>Booking History</h2>
-            <ul>
-                {bookingHistory.map(history => (
-                    <li key={history.id}>
-                        {history.stylistName} - {history.date} at {history.time}
+                    <li key={appointment.appointment_id}>
+                        {appointment.service_type} with Stylist ID: {appointment.stylist_id} on {appointment.date_time}
                     </li>
                 ))}
             </ul>

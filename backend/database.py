@@ -29,6 +29,31 @@ def init_db():
             role VARCHAR(50) NOT NULL
         )
     ''')
+
+    # Create services table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS services (
+            service_id INT AUTO_INCREMENT PRIMARY KEY,
+            service_name VARCHAR(100) NOT NULL,
+            duration VARCHAR(50),
+            price DECIMAL(10, 2)
+        )
+    ''')
+
+    # Create appointments table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS appointments (
+            appointment_id INT AUTO_INCREMENT PRIMARY KEY,
+            customer_id INT,
+            stylist_id INT,
+            service_id INT,
+            date_time DATETIME,
+            status VARCHAR(50),
+            FOREIGN KEY (customer_id) REFERENCES users(id),
+            FOREIGN KEY (stylist_id) REFERENCES users(id),
+            FOREIGN KEY (service_id) REFERENCES services(service_id)
+        )
+    ''')
     
     conn.commit()
     conn.close()
@@ -61,3 +86,61 @@ def get_all_users():
     
     conn.close()
     return users
+
+def add_appointment(customer_id, stylist_id, service_id, date_time, status):
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="@Bray124",
+        database="haven"
+    )
+    cursor = conn.cursor()
+    
+    cursor.execute('INSERT INTO appointments (customer_id, stylist_id, service_id, date_time, status) VALUES (%s, %s, %s, %s, %s)', 
+                   (customer_id, stylist_id, service_id, date_time, status))
+    
+    conn.commit()
+    conn.close()
+
+def get_appointments_for_user(user_id):
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="@Bray124",
+        database="haven"
+    )
+    cursor = conn.cursor()
+    
+    cursor.execute('SELECT * FROM appointments WHERE customer_id = %s OR stylist_id = %s', (user_id, user_id))
+    appointments = cursor.fetchall()
+    
+    conn.close()
+    return appointments
+
+def update_appointment_status(appointment_id, new_status):
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="@Bray124",
+        database="haven"
+    )
+    cursor = conn.cursor()
+    
+    cursor.execute('UPDATE appointments SET status = %s WHERE appointment_id = %s', (new_status, appointment_id))
+    
+    conn.commit()
+    conn.close()
+
+def delete_appointment(appointment_id):
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="@Bray124",
+        database="haven"
+    )
+    cursor = conn.cursor()
+    
+    cursor.execute('DELETE FROM appointments WHERE appointment_id = %s', (appointment_id,))
+    
+    conn.commit()
+    conn.close()
