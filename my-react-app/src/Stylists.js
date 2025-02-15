@@ -1,33 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import StylistForm from './StylistForm';
+import { getStylists, createStylist } from './services/api';
 
-const Stylists = () => {
-    const [stylists, setStylists] = useState([]);
-    const [error, setError] = useState(null);
+export default function Stylists() {
+  const [stylists, setStylists] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
-    useEffect(() => {
-        const fetchStylists = async () => {
-            try {
-                const response = await axios.get('/api/users?role=Stylist');
-                setStylists(response.data);
-            } catch (err) {
-                setError(err);
-            }
-        };
-        fetchStylists();
-    }, []);
+  useEffect(() => {
+    loadStylists();
+  }, []);
 
-    return (
-        <div>
-            <h1>Available Stylists</h1>
-            {error && <p>Error fetching stylists: {error.message}</p>}
-            <ul>
-                {stylists.map(stylist => (
-                    <li key={stylist.id}>{stylist.username}</li>
-                ))}
-            </ul>
-        </div>
-    );
-};
+  const loadStylists = async () => {
+    const data = await getStylists();
+    setStylists(data);
+  };
 
-export default Stylists;
+  const handleAddStylist = async (stylistData) => {
+    await createStylist(stylistData);
+    loadStylists();
+    setShowForm(false);
+  };
+
+  return (
+    <div>
+      <button onClick={() => setShowForm(true)}>Add New Stylist</button>
+      {showForm && <StylistForm onSubmit={handleAddStylist} />}
+      <div className="stylist-list">
+        {stylists.map(stylist => (
+          <div key={stylist.id} className="stylist-card">
+            <h3>{stylist.name}</h3>
+            <p>Specialty: {stylist.specialty}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

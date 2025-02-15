@@ -3,26 +3,65 @@ import axios from 'axios';
 
 const CustomerDashboard = () => {
     const [appointments, setAppointments] = useState([]);
-    const [bookingHistory, setBookingHistory] = useState([]);
+    const [selectedService, setSelectedService] = useState('Haircut');
+    const [selectedDateTime, setSelectedDateTime] = useState('');
 
     useEffect(() => {
         const fetchAppointments = async () => {
-            const response = await axios.get('/api/appointments?user_id=1'); // Replace with actual user ID
+            const user = JSON.parse(localStorage.getItem('user'));
+            const response = await axios.get(`http://localhost:5000/api/appointments/${user.username}`);
             setAppointments(response.data);
         };
         fetchAppointments();
     }, []);
 
+    const handleBookAppointment = async (e) => {
+        e.preventDefault();
+        const user = JSON.parse(localStorage.getItem('user'));
+        
+        await axios.post('http://localhost:5000/api/appointments', {
+            service: selectedService,
+            dateTime: selectedDateTime,
+            customerId: user.username
+        });
+        // Refresh appointments
+    };
+
     return (
-        <div>
-            <h1>Your Appointments</h1>
-            <ul>
+        <div className="dashboard">
+            <h1>Welcome, {JSON.parse(localStorage.getItem('user')).username}</h1>
+            
+            {/* Book Appointment Section */}
+            <div className="booking-section">
+                <h2>Book New Appointment</h2>
+                <form onSubmit={handleBookAppointment}>
+                    <select value={selectedService} onChange={(e) => setSelectedService(e.target.value)}>
+                        <option value="Haircut">Haircut</option>
+                        <option value="Coloring">Coloring</option>
+                        <option value="Facial">Facial Treatment</option>
+                    </select>
+                    <input
+                        type="datetime-local"
+                        value={selectedDateTime}
+                        onChange={(e) => setSelectedDateTime(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Book Now</button>
+                </form>
+            </div>
+
+            {/* Appointments List */}
+            <div className="appointments-list">
+                <h2>Your Appointments</h2>
                 {appointments.map(appointment => (
-                    <li key={appointment.appointment_id}>
-                        {appointment.service_type} with Stylist ID: {appointment.stylist_id} on {appointment.date_time}
-                    </li>
+                    <div key={appointment.id} className="appointment-card">
+                        <p>Service: {appointment.service}</p>
+                        <p>Date: {new Date(appointment.dateTime).toLocaleString()}</p>
+                        <p>Status: {appointment.status}</p>
+                        <button onClick={() => handleCancel(appointment.id)}>Cancel</button>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

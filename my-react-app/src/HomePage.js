@@ -139,7 +139,7 @@ const HomePage = () => {
                     <textarea name="message" placeholder="Your questions or comments" required onChange={handleChange}></textarea>
                     <button type="submit" disabled={loading}>Submit</button>
                 </form>
-                {loading && <p>Loading...</p>} {/* Display loading indicator */}
+                {loading && <p>Cooking...</p>} {/* Display loading indicator */}
                 {responseMessage && <p>{responseMessage}</p>}
             </div>
             <div className="button-container">

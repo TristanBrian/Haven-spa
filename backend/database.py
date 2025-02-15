@@ -1,4 +1,5 @@
 import mysql.connector
+import logging
 
 def init_db():
     # Create database if it doesn't exist
@@ -26,7 +27,9 @@ def init_db():
             id INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(50) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL,
-            role VARCHAR(50) NOT NULL
+            role VARCHAR(50) NOT NULL,
+            expertise VARCHAR(255),
+            availability VARCHAR(255)
         )
     ''')
 
@@ -81,11 +84,43 @@ def get_all_users():
     )
     cursor = conn.cursor()
     
-    cursor.execute('SELECT * FROM users')
+    cursor.execute('SELECT id, username, password, role, expertise, availability FROM users')
     users = cursor.fetchall()
+    
+    logging.info(f"Retrieved users from database: {users}")  # Log the retrieved users
     
     conn.close()
     return users
+
+def get_all_stylists():
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="@Bray124",
+        database="haven"
+    )
+    cursor = conn.cursor()
+    
+    cursor.execute('SELECT * FROM users WHERE role = "Stylist"')
+    stylists = cursor.fetchall()
+    
+    conn.close()
+    return stylists
+
+def get_all_appointments():
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="@Bray124",
+        database="haven"
+    )
+    cursor = conn.cursor()
+    
+    cursor.execute('SELECT * FROM appointments')
+    appointments = cursor.fetchall()
+    
+    conn.close()
+    return appointments
 
 def add_appointment(customer_id, stylist_id, service_id, date_time, status):
     conn = mysql.connector.connect(

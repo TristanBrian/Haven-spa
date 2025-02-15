@@ -5,8 +5,15 @@ const UserList = () => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const response = await fetch('http://localhost:5000/users');
-            const data = await response.json();
+            const response = await fetch('http://localhost:5000/api/users');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json().catch(error => {
+                console.error('Error parsing JSON:', error);
+            });
+
             setUsers(data);
         };
 
@@ -17,9 +24,11 @@ const UserList = () => {
         <div>
             <h2>Registered Users</h2>
             <ul>
-                {users && Object.keys(users).map((username) => (
-                    <li key={username}>
-                        {username} - Role: {users[username].role}
+                {users && users.map((user) => (
+                    <li key={`${user.username}-${user.role}`}>
+
+                        {user.username} - Role: {user.role} 
+                        {user.expertise && ` (${user.expertise})`}
                     </li>
                 ))}
             </ul>
